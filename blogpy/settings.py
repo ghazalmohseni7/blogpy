@@ -128,19 +128,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CKEditor settings :
+# static file :
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_URL = 'static/'
 
-#CKEditor settings :
-#static file :
-PROJECT_ROOT=os.path.dirname(os.path.abspath(__file__))
-STATIC_URL='static/'
-
-#ckeditor:
-CKEDITOR_BASEPATH='/static/ckeditor/ckeditor/'
+# ckeditor:
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
 CKEDITOR_UPLOAD_PATH = "uploads/"
-
-
 
 # STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static'))),
 STATIC_ROOT = (str(BASE_DIR.joinpath('staticfiles')))
+
+# mdeia
+MEDIA_URL = 'pics/'
+MEDIA_ROOT = (str(BASE_DIR.joinpath(''))),
