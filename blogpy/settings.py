@@ -58,6 +58,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             str(BASE_DIR.joinpath('pics')),
+            str(BASE_DIR.joinpath('static')),
+            str(BASE_DIR.joinpath('templates')),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -135,3 +137,10 @@ STATIC_URL='static/'
 #ckeditor:
 CKEDITOR_BASEPATH='/static/ckeditor/ckeditor/'
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+
+# STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (str(BASE_DIR.joinpath('static'))),
+STATIC_ROOT = (str(BASE_DIR.joinpath('staticfiles')))
