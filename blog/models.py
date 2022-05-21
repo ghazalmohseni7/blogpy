@@ -38,6 +38,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    promote=models.BooleanField(default=False)
     def __str__(self):
         return self.title
 
