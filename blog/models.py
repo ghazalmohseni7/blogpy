@@ -25,7 +25,7 @@ class userProfile(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=128, null=False, blank=False)
-    cover = models.FileField(upload_to='pics/categoryCover/', null=False, blank=False, validators=[validateFileExtension])
+    cover = models.FileField(upload_to='pics/categoryCover/', null=True, blank=True, validators=[validateFileExtension])
     def __str__(self):
         return self.title
 
