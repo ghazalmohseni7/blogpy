@@ -32,6 +32,7 @@ class AllArticleAPIView(APIView):
 class SingleArticleAPIView(APIView):
     def get(self, request, format=None):
         try:
+            print(request)
             article_name = request.GET['article_title']
             article = Article.objects.filter(title=article_name)
             serialized_data = serializers.SingleArticleSerializers(article, many=True)
@@ -41,3 +42,31 @@ class SingleArticleAPIView(APIView):
 
         except:
             return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    # def post(self, request, format=None):
+    #     try:
+    #         print(request)
+    #         article_name = request.GET['article_title']
+    #         article = Article.objects.filter(title=article_name)
+    #         serialized_data = serializers.SingleArticleSerializers(article, many=True)
+    #         data = serialized_data.data
+    #         return Response({'data': data}, status=status.HTTP_200_OK)
+    #
+    #
+    #     except:
+    #         return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+    # def post(self, request, format=None):
+    #     try:
+    #         print(request)
+    #         article_name = request.GET['article_title']
+    #         promote=request.GET['promote']
+    #         print(article_name,promote)
+    #         article = Article.objects.filter(title=article_name).filter(promote=promote)
+    #         serialized_data = serializers.SingleArticleSerializers(article, many=True)
+    #         data = serialized_data.data
+    #         return Response({'data': data}, status=status.HTTP_200_OK)
+    #
+    #
+    #     except:
+    #         return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

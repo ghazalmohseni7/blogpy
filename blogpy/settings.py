@@ -147,3 +147,9 @@ STATIC_ROOT = (str(BASE_DIR.joinpath('staticfiles')))
 # mdeia
 MEDIA_URL = 'pics/'
 MEDIA_ROOT = (str(BASE_DIR.joinpath(''))),
+
+
+REST_FRAMEWORK={
+    'DEFAULT_PERMISSION_CLASSES':[
+    'rest_framework.permissions.AllowAny', ]
+}
