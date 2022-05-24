@@ -17,7 +17,7 @@ class IndexPage(TemplateView):
                     'title': article.title,
                     'category': article.category.title,
                     'created_at': article.created_at,
-                    'cover': article.cover.url,
+                    'cover': article.cover,
 
                 }
             )

@@ -2,10 +2,12 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from blog.models import Article,userProfile,Category
+from blog.models import Article, userProfile, Category
 from . import serializers
 from django.contrib.auth.models import User
 import re
+
+
 # Create your views here.
 
 class AllArticleAPIView(APIView):
@@ -56,7 +58,6 @@ class SingleArticleAPIView(APIView):
     #     except:
     #         return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
     # def post(self, request, format=None):
     #     try:
     #         print(request)
@@ -71,7 +72,6 @@ class SingleArticleAPIView(APIView):
     #
     #     except:
     #         return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 
 # class SubmitArticleAPIView(APIView):
@@ -133,61 +133,59 @@ class SingleArticleAPIView(APIView):
 #             return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
 class SubmitCategoryAPIView(APIView):
-    def post(self,request,format=None):
+    def post(self, request, format=None):
         try:
-            serialized_data=serializers.SubmitCategorySerializer(data=request.data)
+            serialized_data = serializers.SubmitCategorySerializer(data=request.data)
 
             if serialized_data.is_valid():
-                cat=Category()
-                cat.title=serialized_data.data.get('title')
-                cat.cover=serialized_data.data.get('cover')
+                cat = Category()
+                cat.title = serialized_data.data.get('title')
+                cat.cover = serialized_data.data.get('cover')
                 cat.save()
             else:
                 return Response({'status': 'bad request'}, status=status.HTTP_200_OK)
 
-            return Response({'status':'save done'} ,status=status.HTTP_200_OK)
+            return Response({'status': 'save done'}, status=status.HTTP_200_OK)
 
         except:
             return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
 class SubmitArticleAPIView(APIView):
-    def post(self,request):
+    def post(self, request):
         try:
-            serialized_data=serializers.SubmitArticleSerializer(data=request.data)
+            serialized_data = serializers.SubmitArticleSerializer(data=request.data)
             print("lllllllllllllllll")
             print(request.POST)
             # tmp=str(serialized_data)
             # data=re.split(',',tmp)
             # for x in data:
             #     print(x,type(x))
-            print("title:",request.POST['title'])
+            print("title:", request.POST['title'])
             print("contente:", request.POST['content'])
             # print("cover:", serialized_data.data.get('cover'))
             print("promote:", request.POST['promote'])
             print("category:", request.POST['category_id'])
             print("author:", request.POST['author_id'])
-            #print((serialized_data.is_valid()))
-            #print((serialized_data.errors))
+            # print((serialized_data.is_valid()))
+            # print((serialized_data.errors))
             if serialized_data.is_valid():
 
-                userProfile_object=userProfile.objects.get(id=int(request.POST['author_id']))
-                author=userProfile_object
-                category_object=Category.objects.get(title='xyz')
-                category=category_object
+                userProfile_object = userProfile.objects.get(id=int(request.POST['author_id']))
+                author = userProfile_object
+                category_object = Category.objects.get(title='xyz')
+                category = category_object
                 print("//////////////////////////")
-                #print('in if validation : ',author,category)
+                # print('in if validation : ',author,category)
 
-                article_obj=Article()
-                article_obj.title=request.POST['title']
-                #article_obj.cover=serialized_data.data.get('cover')
-                article_obj.content=request.POST['content']
-                article_obj.category=category
-                article_obj.author=author
-                article_obj.promote=request.POST['promote']
+                article_obj = Article()
+                article_obj.title = request.POST['title']
+                # article_obj.cover=request.FILES['cover']
+                article_obj.content = request.POST['content']
+                article_obj.category = category
+                article_obj.author = author
+                article_obj.promote = request.POST['promote']
 
                 article_obj.save()
             else:
@@ -195,3 +193,27 @@ class SubmitArticleAPIView(APIView):
             return Response({'status': 'save done'}, status=status.HTTP_200_OK)
         except:
             return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class UpdateArticleAPIView(APIView):
+    def post(self, request, format=None):
+        try:
+            print("try", request.data)
+            article_obj = Article.objects.get(id=int(request.POST['id']))
+            print(article_obj)
+
+            if serialized_data_update.is_valid():
+
+                new_title = request.POST['title']
+                new_content = request.POST['content']
+                new_promote = int(request.POST['promote'])
+
+                article_obj.title = new_title
+                article_obj.promote = new_promote
+                article_obj.content = new_content
+                article_obj.save()
+            else:
+                return Response({'status': 'can not update'}, status=status.HTTP_200_OK)
+            return Response({'status': 'update done'}, status=status.HTTP_200_OK)
+        except:
+            return Response({'status': 'Internal serverrr error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

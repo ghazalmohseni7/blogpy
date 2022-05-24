@@ -22,10 +22,18 @@ class SubmitArticleSerializer(serializers.ModelSerializer):
     #
     class Meta:
         model = Article
-        fields = ('title', 'cover','content', 'category_id','author_id', 'promote',)
+        fields = ('title', 'cover', 'content', 'category_id', 'author_id', 'promote',)
 
 
 class SubmitCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('title', 'cover')
+
+
+class UpdateArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+
+        fields = ('id', 'title', 'content', 'promote')
+        # title , content and promote are the fields that i want to change them
