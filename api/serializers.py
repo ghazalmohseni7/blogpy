@@ -37,3 +37,10 @@ class UpdateArticleSerializer(serializers.ModelSerializer):
 
         fields = ('id', 'title', 'content', 'promote')
         # title , content and promote are the fields that i want to change them
+
+
+class DeleteArticleSerializer(serializers.Serializer):
+    # class Meta:
+    #     model = Article
+    #     fields = ('id')
+    id = serializers.IntegerField(required=True, allow_null=False)

@@ -144,7 +144,7 @@ class SubmitCategoryAPIView(APIView):
                 cat.cover = serialized_data.data.get('cover')
                 cat.save()
             else:
-                return Response({'status': 'bad request'}, status=status.HTTP_200_OK)
+                return Response({'status': 'bad request'}, status=status.HTTP_400_BAD_REQUEST)
 
             return Response({'status': 'save done'}, status=status.HTTP_200_OK)
 
@@ -189,7 +189,7 @@ class SubmitArticleAPIView(APIView):
 
                 article_obj.save()
             else:
-                return Response({'status': 'bad request'}, status=status.HTTP_200_OK)
+                return Response({'status': 'bad request'}, status=status.HTTP_400_BAD_REQUEST)
             return Response({'status': 'save done'}, status=status.HTTP_200_OK)
         except:
             return Response({'status': 'Internal server error '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -213,7 +213,27 @@ class UpdateArticleAPIView(APIView):
                 article_obj.content = new_content
                 article_obj.save()
             else:
-                return Response({'status': 'can not update'}, status=status.HTTP_200_OK)
+                return Response({'status': 'bad request'}, status=status.HTTP_400_BAD_REQUEST)
             return Response({'status': 'update done'}, status=status.HTTP_200_OK)
+        except:
+            return Response({'status': 'Internal serverrr error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+class DeleteArticleAPIView(APIView):
+    def post(self, request, format=None):
+        try:
+            print("try", request.data)
+            article_obj = Article.objects.get(id=int(request.POST['id']))
+            print(article_obj)
+
+            serialized_data_delete = serializers.DeleteArticleSerializer(data=request.data)
+
+            if serialized_data_delete.is_valid():
+
+                Article.objects.filter(id=int(request.POST['id'])).delete()
+            else:
+                return Response({'status': 'bad request'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'status': 'delete done'}, status=status.HTTP_200_OK)
         except:
             return Response({'status': 'Internal serverrr error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
